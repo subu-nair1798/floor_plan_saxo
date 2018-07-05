@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    
+    <link rel="stylesheet" href="./src/style.css">
+    <link rel="stylesheet" href="./lib/bootstrap-4.1.0-dist/css/bootstrap.css">
+
+    <script src="./lib/jQuery-3.3.1.js"></script>
+    <!-- <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script> -->
+    <script src="./lib/bootstrap-4.1.0-dist/js/bootstrap.js"></script>
+
+   </head>
+<body>
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #2c3e50">
+            <div class="container">
+                <a class="navbar-brand" href="index.html">Saxo AS</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+    
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                    </ul>
+    
+                    <ul class="navbar-nav">
+                        <li class="form-inline">
+                            <input class="form-control" id="seat_search_input" placeholder="Search using Seat ID">
+                            &nbsp;
+                            <button class="btn btn-dark-outline" id="seat_search_btn">Search</button>
+                        </li>
+                        &nbsp; &nbsp;
+                        <li class="form-inline">
+                            <input class="form-control" id="emp_search_input" placeholder="Search using Emp ID">
+                            &nbsp;
+                            <button class="btn btn-dark-outline" id="emp_search_btn">Search</button>
+                        </li>
+                    </ul>
+                </div> 	
+            </div>	
+        </nav>
+
+    <div class="container">
+            <div class="floor_group">
+                <h6>Floor 1</h6>
+                <hr>
+                <div class="bay_group">
+                    <h6>Bay 1</h6>
+                    <hr>
+                    <div class="seat_group"> S1 </div>
+                    <div class="seat_group"> S2 </div>
+                </div>
+                <div class="bay_group">
+                    <h6>Bay 2</h6>
+                    <hr>
+                    <div class="seat_group"> S1 </div>
+                    <div class="seat_group"> S2 </div>
+                </div>
+            </div>
+            <img src="./Picture2.png" alt="">
+
+            <div class="pop_div">
+                <div id="detail_content" class="pop_content">
+                    <h1>Details <span class="close">&times;</span></h1>    
+                    <hr>
+                    <div id="info_1">
+                        <h5>Floor(s) : <span id="floor_info"></span></h5>
+                    </div>
+                    <div id="info_2">
+                        <h5>Bay(s) : <span id="bay_info"></span></h5>
+                    </div>
+                    <div id="info_3">
+                        <h5>Seat(s) : <span id="seat_info"></span></h5>
+                    </div>
+                    <div id="info_4">
+                        <h5>Employee Name : <span id="name_info"></span></h5>
+                    </div>
+                    <div id="info_5">
+                        <h5>Employee ID : <span id="id_info"></span></h5>
+                    </div>
+                    <div id="info_6">
+                        <h5>Start Date : <span id="start_info"></span></h5>
+                    </div>
+                    <div id="info_7">
+                        <h5><i><b><span id="vacant_desk"></span></b></i></h5>
+                    </div>
+                    <hr>
+                    <button class="btn btn-success" id="add_btn">Assign</button>
+                    <button class="btn btn-danger" id="delete_btn">Unassign</button>
+                    <button class="btn btn-dark" id="edit_btn">Re-Assign Desk(s)</button>  
+                </div>
+                <div id="add_content" class="pop_content">
+                    <h1>Add<span class="close">&times;</span></h1>
+                    <hr>
+                    <div class="form-group row">
+                        <label for="add_desk" class="col-2 col-form-label"><h5>Seat</h5></label>
+                        <input type="text" placeholder="Desk" id="seat_input" class="form-control form-control-sm col-5">
+                    </div>
+                    <div class="form-group row">
+                        <label for="add_id" class="col-2 col-form-label"><h5>Employee ID</h5></label>
+                        <input type="text" placeholder="Employee ID" id="id_input" class="form-control form-control-sm col-5">
+                    </div>
+                    <button class="btn btn-success" id="submit_add">Submit</button>
+                    <button class="btn btn-danger" id="cancel_add">Cancel</button>
+                </div>
+                <div id="edit_content" class="pop_content">
+                    <h1>Re-Assign Desk(s)<span class="close">&times;</span></h1>
+                    <hr>
+                    <ul class="list-group" id="edit_list">
+                    </ul>
+                    <br>
+                    <button class="btn btn-success" id="submit_edit">Submit</button>
+                    <button class="btn btn-danger" id="cancel_edit">Cancel</button>
+                </div>
+                <div id="emp_search_content" class="pop_content">
+                    <h1>Employee Details<span class="close">&times;</span></h1>
+                    <hr>
+                    <div id="search_1">
+                        <h5>Employee Name : <span id="name_search"></span></h5>
+                    </div>
+                    <div id="search_2">
+                        <h5>Employee ID : <span id="id_search"></span></h5>
+                    </div>
+                    <div id="search_3">
+                        <h5>Seat : <span id="seat_search"></span></h5>
+                    </div>
+                    <hr>
+                    <button class="btn btn-success" id="fetch_btn">Fetch Seat</button>
+                </div>
+            </div>
+    </div>        
+        
+
+        
+        
+    <!-- <script src="./src/js/utils/saveData.js"></script> -->
+    <script src="./dist/bundle.js"></script>
+</body>
+</html>
