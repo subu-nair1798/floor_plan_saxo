@@ -85,7 +85,9 @@ html, body {
     font-size: 28px;
     font-weight: bold;
 }
-
+#F1_info, #F2_info {
+    float: right;
+}
 #close:hover,
 #close:focus {
     color: #000;

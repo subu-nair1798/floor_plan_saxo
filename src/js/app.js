@@ -35,7 +35,7 @@ $('#docBody').mouseover(function(event) {
   
   let id_ar = [];
   let target_div = event.target.title || event.target.id;
-  console.log(target_div);
+  // console.log(target_div);
   if(seat_ar.map(s => s.seat_id).indexOf(target_div) >= 0) {
 
     id_ar.push(target_div);
@@ -46,12 +46,13 @@ $('#docBody').mouseover(function(event) {
 
     id_ar.push(target_div);
     id_ar.push($('#'+target_div).parent().attr('id'));
-  
   }
-  //  else if(floor_ar.map(f => f.floor_id).indexOf(target_div) >= 0) {
-  //   id_ar.push(target_div);
-  
-  // }
+  fetchDetail(id_ar);
+})
+
+$('.floor_info').click(function() {
+  let id_ar =[];
+  id_ar.push($(this).attr('id').substr(0,2));
   fetchDetail(id_ar);
 })
 
@@ -163,8 +164,6 @@ $('#floor1_toggle').click(function() {
   if($('#floor_1').css('display','none')) {
     $('#floor_1').css('display','block');
     $('#floor_2').css('display','none');
-    // $('.floorImgGroup').css('width','100%');
-    // $('.floorAreaGroup').css('margin-top','100px');
   }
   
 })
@@ -173,8 +172,6 @@ $('#floor2_toggle').click(function() {
   if($('#floor_2').css('display','none')) {
     $('#floor_2').css('display','block');
     $('#floor_1').css('display','none');
-    // $('.floorImgGroup').css('width','100%');
-    // $('.floorAreaGroup').css('margin-top','100px');
   }
 })
 
@@ -309,6 +306,8 @@ function fetchDetail(id_ar = []) {
   detailDom(detail_obj);
 }
 
+// ---------- Render function to save the changes to DB and re-render DOM elements ----------
+
 function render_plan(first_page_load = false) {
 
   if((localStorage.getItem("emp_ar") == null) || (localStorage.getItem("seat_ar") == null)) {
@@ -356,5 +355,7 @@ function render_plan(first_page_load = false) {
   console.log(bay_ar);
   console.log(seat_ar);
 }
+
+// ---------- Function Call to Handle Window ReSize ----------
 
 imageMapResize();

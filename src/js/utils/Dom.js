@@ -80,6 +80,7 @@ export function detailDom(detail_obj = {}) {
         $('#add_btn').css('display','none');
         $('#edit_btn').css('display','none');
         $('#delete_btn').css('display','none');
+        $('#cancel_btn').css('display','none');
     }
 }
 
