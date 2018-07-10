@@ -8,8 +8,8 @@ export class Seat {
     getSeatDetail(seat_obj = {}, emp_data = {}) {
 
         let detail_obj = {
-            floor_id: $('#'+seat_obj.seat_id).parent().parent().attr('id'),
-            bay_id: $('#'+seat_obj.seat_id).parent().attr('id'),
+            floor_id: $('#'+seat_obj.seat_id).parent().parent().parent().attr('id'),
+            bay_id: $('#'+seat_obj.seat_id).parent().parent().attr('id'),
             seat_id: seat_obj.seat_id,
             emp_id: seat_obj.emp_id,
             emp_name: emp_data.emp_name,

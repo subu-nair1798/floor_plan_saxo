@@ -9,9 +9,9 @@ import {detailDom, traverseDom, addDom, hideDoms, createEditDom, searchDom, assi
 import {floorIdArray, bayIdArray, seatIdArray} from './utils/domIdGroup';
 
 
-assignId(floorIdArray);
-assignId(bayIdArray);
-assignId(seatIdArray);
+// assignId(floorIdArray);
+// assignId(bayIdArray);
+// assignId(seatIdArray);
 
 let emp_ar = [];
 let floor_ar = [];
@@ -26,34 +26,46 @@ render_plan(true)
 
 let docBody = document.getElementsByTagName('BODY')[0];
 
-docBody.onclick = function(event) {
+$('.floorImgGroup').maphilight();
+$('.bayArea').attr('data-maphilight','{"strokeColor":"000000","strokeWidth":6,"fillColor":"999999","fillOpacity":0.6}}');
+
+$('#docBody').mouseover(function(event) {
+  
+}).click(function(event) {
   
   let id_ar = [];
-  let target_div = event.target.id;
+  let target_div = event.target.title || event.target.id;
+  console.log(target_div);
   if(seat_ar.map(s => s.seat_id).indexOf(target_div) >= 0) {
 
-      id_ar.push(event.target.id);
-      id_ar.push(event.target.parentElement.id);
-      id_ar.push(event.target.parentElement.parentElement.id);
-      fetchDetail(id_ar);
-
+    id_ar.push(target_div);
+    id_ar.push(event.target.parentElement.parentElement.id);
+    id_ar.push(event.target.parentElement.parentElement.parentElement.id);
+    
   } else if(bay_ar.map(b => b.bay_id).indexOf(target_div) >= 0) {
 
-    id_ar.push(event.target.id);
-    id_ar.push(event.target.parentElement.id);
-    fetchDetail(id_ar);
-
+    id_ar.push(target_div);
+    id_ar.push($('#'+target_div).parent().attr('id'));
+  
   } else if(floor_ar.map(f => f.floor_id).indexOf(target_div) >= 0) {
-
-    id_ar.push(event.target.id);
-    fetchDetail(id_ar);
-
+    id_ar.push(target_div);
+  
   }
-}
+  console.log(id_ar);
+  fetchDetail(id_ar);
+})
 
 $('.close').click(function() {
   $('.pop_div').css('display','none');
+  $('.floor_group').css('display','none');
   render_plan();
+})
+
+$('#cancel_btn').click(function() {
+  $('.pop_div').css('display','none');
+  $('.floor_group').css('display','block');
+  console.log($('#bay_info').html());
+  $('#'+$('#bay_info').html()).css('display','block');
 })
 
 $('#add_btn').click(function() {
@@ -230,6 +242,8 @@ $('#fetch_btn').click(function() {
 // ---------- Functions ----------
 
 function fetchDetail(id_ar = []) {
+
+  let detail_obj;
   if(id_ar.length == 3) {
     let index;
     for(let i in seat_ar) {
@@ -250,10 +264,7 @@ function fetchDetail(id_ar = []) {
         emp_name: "null"
       }
     }
-    
-    let detail_obj = seat_ar[index].getSeatDetail(seat_ar[index], emp_data);
-
-    detailDom(detail_obj);
+    detail_obj = seat_ar[index].getSeatDetail(seat_ar[index], emp_data);
 
   } else if(id_ar.length == 2) {
     let index;
@@ -263,8 +274,7 @@ function fetchDetail(id_ar = []) {
         break;
       }
     }
-    let detail_obj = bay_ar[index].getBayDetail(bay_ar[index]);
-    detailDom(detail_obj);
+    detail_obj = bay_ar[index].getBayDetail(bay_ar[index]);
 
   } else if(id_ar.length == 1) {
     let index;
@@ -274,9 +284,10 @@ function fetchDetail(id_ar = []) {
         break;
       }
     }
-    let detail_obj = floor_ar[index].getFloorDetail(floor_ar[index]);
-    detailDom(detail_obj);
+    detail_obj = floor_ar[index].getFloorDetail(floor_ar[index]);
   }
+  console.log(detail_obj);
+  detailDom(detail_obj);
 }
 
 function render_plan(first_page_load = false) {
@@ -326,3 +337,5 @@ function render_plan(first_page_load = false) {
   console.log(bay_ar);
   console.log(seat_ar);
 }
+
+imageMapResize();

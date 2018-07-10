@@ -5,7 +5,9 @@ export function detailDom(detail_obj = {}) {
         $('#detail_content').css('display','block');
         $('#add_content').css('display','none');
         $('#edit_content').css('display','none');
-        $("#emp_search_content").css('display','none');
+        $('#emp_search_content').css('display','none');
+        $('.floor_group').css('display','none');
+        $('.bay_group').css('display','none');
 
         let floor_info = document.getElementById('floor_info');
         floor_info.innerHTML = detail_obj.floor_id;
@@ -48,28 +50,13 @@ export function detailDom(detail_obj = {}) {
         }
     } else if(Object.keys(detail_obj).length == 3) {
         
-        $('.pop_div').css('display','block');
-        $('#detail_content').css('display','block');
+        $('.pop_div').css('display','none');
+        $('#detail_content').css('display','none');
+        $('.floor_group').css('display','block');
+        $('#'+detail_obj.bay_id).css('display','block')
         $('#add_content').css('display','none');
         $("#emp_search_content").css('display','none');
 
-        let floor_info = document.getElementById('floor_info');
-        floor_info.innerHTML = detail_obj.floor_id;
-        let bay_info = document.getElementById('bay_info');
-        bay_info.innerHTML = detail_obj.bay_id;
-        let seat_info = document.getElementById('seat_info');
-        seat_info.innerHTML = detail_obj.seat_ar;
-
-        $('#info_1').css('display','block');
-        $('#info_2').css('display','block');
-        $('#info_3').css('display','block');
-        $('#info_4').css('display','none');
-        $('#info_5').css('display','none');
-        $('#info_6').css('display','none');
-        $('#info_7').css('display','none');
-        $('#add_btn').css('display','none');
-        $('#edit_btn').css('display','none');
-        $('#delete_btn').css('display','none');
     } else if(Object.keys(detail_obj).length == 2) {
         
         $('.pop_div').css('display','block');
@@ -77,6 +64,8 @@ export function detailDom(detail_obj = {}) {
         $('#add_content').css('display','none');
         $('#edit_content').css('display','none');
         $("#emp_search_content").css('display','none');
+        $('.floor_group').css('display','none');
+        $('.bay_group').css('display','none');
 
         let floor_info = document.getElementById('floor_info');
         floor_info.innerHTML = detail_obj.floor_id;
@@ -93,20 +82,13 @@ export function detailDom(detail_obj = {}) {
         $('#add_btn').css('display','none');
         $('#edit_btn').css('display','none');
         $('#delete_btn').css('display','none');
-    } else {
-        $('.pop_div').css('display','none');
-        $('#detail_content').css('display','none');
-        $('#add_content').css('display','none');
-        $('#edit_content').css('display','none');
-        $("#emp_search_content").css('display','none');
     }
-
 }
 
 export function traverseDom(seat_ar = []) {
     for(let i = 1; i <= 1; i++) {
         for(let j = 1; j <= 2; j++) {
-            for(let k = 1; k <= 2; k++) {
+            for(let k = 1; k <= 5; k++) {
                 let id_str = $('#F'+i+'-B'+j+'-S'+k).attr('id');
                 for(let x in seat_ar) {
                     if(seat_ar[x].seat_id == id_str) {
@@ -123,6 +105,8 @@ export function traverseDom(seat_ar = []) {
 }
 
 export function addDom(seat_id) {
+    $('.floor_group').css('display','none');
+    $('.bay_group').css('display','none');
     $('#detail_content').css('display','none');
     $('#add_content').css('display','block');
     $('#edit_content').css('display','none');
@@ -132,6 +116,8 @@ export function addDom(seat_id) {
 export function hideDoms() {
     $('.pop_div').css('display','none');
     $('.pop_content').css('display','none');
+    $('.floor_group').css('display','none');
+    $('.bay_group').css('display','none');
 }
 
 export function createEditDom(seat_id) {
@@ -166,6 +152,8 @@ export function searchDom(emp_data = {}, seat_data) {
     $('#add_content').css('display','none');
     $('#edit_content').css('display','none');
     $("#emp_search_content").css('display','block');
+    $('.floor_group').css('display','none');
+    $('.bay_group').css('display','none');
 
     $('#name_search').html(emp_data.emp_name);
     $('#id_search').html(emp_data.emp_id);
