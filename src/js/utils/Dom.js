@@ -51,11 +51,9 @@ export function detailDom(detail_obj = {}) {
     } else if(Object.keys(detail_obj).length == 3) {
         
         $('.pop_div').css('display','none');
-        $('#detail_content').css('display','none');
+        $('.pop_content').css('display','none')
         $('.floor_group').css('display','block');
         $('#'+detail_obj.bay_id).css('display','block')
-        $('#add_content').css('display','none');
-        $("#emp_search_content").css('display','none');
 
     } else if(Object.keys(detail_obj).length == 2) {
         
