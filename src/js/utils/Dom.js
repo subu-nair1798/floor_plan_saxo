@@ -8,6 +8,7 @@ export function detailDom(detail_obj = {}) {
         $('#emp_search_content').css('display','none');
         $('.floor_group').css('display','none');
         $('.bay_group').css('display','none');
+        $('#cancel_btn').css('display','inline');
 
         let floor_info = document.getElementById('floor_info');
         floor_info.innerHTML = detail_obj.floor_id;
