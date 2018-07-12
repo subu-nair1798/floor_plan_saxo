@@ -14,7 +14,16 @@ html, body {
     width: 100%;
 }
 .floorAreaGroup {
+    position: relative;
     margin-top: 100px;
+}
+
+#search_pin {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    top: 549px;
+    left: 654px;
 }
 
 .floor_group {

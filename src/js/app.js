@@ -156,13 +156,12 @@ $('#cancel_edit').click(function() {
 // ---------- NavBar functions ----------
 
 $('#floor1_toggle').click(function() {
-  console.log('test');
   if($('#floor_1').css('display','none')) {
     $('#floor_1').css('display','block');
     $('#floor_2').css('display','none');
   }
   
-})
+})  
 
 $('#floor2_toggle').click(function() {
   if($('#floor_2').css('display','none')) {
@@ -172,10 +171,8 @@ $('#floor2_toggle').click(function() {
 })
 
 $('#seat_search_btn').click(function() {
-
-  let seat_query = $('#seat_search_input').val();
   let query_flag = 0;
-  let query_ar = [];
+  let seat_query = $('#seat_search_input').val();
 
   if(seat_query == "") {
     window.alert("Query field empty");
@@ -186,30 +183,10 @@ $('#seat_search_btn').click(function() {
         break;
       }
     }
-
     if(query_flag == 1) {
-      
-      let mapId;
-      for(let i = 0; i < document.getElementsByClassName('bayArea').length; i++) {
-        if(document.getElementsByClassName('bayArea')[i].getAttribute('title') == $('#'+seat_query).parent().parent().attr('id')) {
-          mapId = document.getElementsByClassName('bayArea')[i].getAttribute('id');
-          break;
-        }
-      }
-      change_higlight(mapId);
-
-      setTimeout(function() {
-        query_ar.push(seat_query);
-        query_ar.push($('#'+seat_query).parent().parent().attr('id'))
-        query_ar.push($('#'+seat_query).parent().parent().parent().attr('id'))
-        fetchDetail(query_ar);
-  
-        query_flag = 0;
-        query_ar = [];
-        $('#seat_search_input').val("");
-        change_higlight(mapId);
-      }, 2000)
-      
+      fetchSeat(seat_query);
+      $('#seat_search_input').val("");
+      query_flag = 0;
     } else {
       window.alert("Incorrect Seat ID");
       $('#seat_search_input').val("");
@@ -217,12 +194,37 @@ $('#seat_search_btn').click(function() {
   }
 })
 
+function fetchSeat(seat_query) {
+  let query_ar = [];  
+  let mapId;
+  for(let i = 0; i < document.getElementsByClassName('bayArea').length; i++) {
+    if(document.getElementsByClassName('bayArea')[i].getAttribute('title') == $('#'+seat_query).parent().parent().attr('id')) {
+      mapId = document.getElementsByClassName('bayArea')[i].getAttribute('id');
+      break;
+    }
+  }
+  if($('#'+seat_query).parent().parent().parent().attr('id') == 'F1') {
+    $('#floor1_toggle').click();
+  } else if ($('#'+seat_query).parent().parent().parent().attr('id') == 'F2') {
+    $('#floor2_toggle').click();
+  }
+  change_higlight(mapId);
+
+  setTimeout(function() {
+    query_ar.push(seat_query);
+    query_ar.push($('#'+seat_query).parent().parent().attr('id'))
+    query_ar.push($('#'+seat_query).parent().parent().parent().attr('id'))
+    fetchDetail(query_ar);
+    query_ar = [];
+    change_higlight(mapId);
+  }, 2000)
+}
+
 $('#emp_search_btn').click(function() {
   
   let emp_query = $('#emp_search_input').val();
   let query_flag = 0;
   let index;
-  let query_ar = [];
 
   if(emp_query == "") {
     window.alert("Query field empty");
@@ -235,16 +237,14 @@ $('#emp_search_btn').click(function() {
       }
     }
     if(query_flag == 1) {
-
       let seat_data = emp_ar[index].getSeat(emp_ar[index], seat_ar);
-      query_ar.push(seat_data);
-      query_ar.push($('#'+seat_data).parent().parent().attr('id'))
-      query_ar.push($('#'+seat_data).parent().parent().parent().attr('id'))
-      console.log(query_ar);
-      fetchDetail(query_ar);
-      query_flag = 0;
+      if(seat_data == "null") {
+        window.alert('No Seat Assign to Employee: '+emp_query);
+      } else {
+        fetchSeat(seat_data);
+      }
       $('#emp_search_input').val("");
-      
+      query_flag = 0;
     } else {
       window.alert("Incorrect Employee ID");
       $('#emp_search_input').val("");
@@ -253,21 +253,6 @@ $('#emp_search_btn').click(function() {
 
 })
 
-// $('#fetch_btn').click(function() {
-//   let fetch_ar = []
-//   let fetch_seat = $('#seat_search').html();
-//   if(fetch_seat == "null") {
-//     window.alert("No seat assigned to the Employee");
-//   } else {
-//     fetch_ar.push(fetch_seat);
-//     fetch_ar.push($('#'+fetch_seat).parent().attr('id'));
-//     fetch_ar.push($('#'+fetch_seat).parent().parent().attr('id'));
-
-//     fetchDetail(fetch_ar);
-//     fetch_ar = [];
-//   }
-// })
-
 // ---------- Functions ----------
 
 function change_higlight(mapId) {
@@ -275,6 +260,7 @@ function change_higlight(mapId) {
   data.alwaysOn = !data.alwaysOn;
   $('#'+mapId).data('maphilight', data).trigger('alwaysOn.maphilight');
 }
+
 
 function fetchDetail(id_ar = []) {
 
@@ -287,8 +273,6 @@ function fetchDetail(id_ar = []) {
         break;
       }
     }
-
-    
     let emp_index = emp_ar.map(e => e.emp_id).indexOf(seat_ar[index].emp_id);
     let emp_data;
     if(emp_index >= 0) {
