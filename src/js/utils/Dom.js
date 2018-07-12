@@ -5,7 +5,7 @@ export function detailDom(detail_obj = {}) {
         $('#detail_content').css('display','block');
         $('#add_content').css('display','none');
         $('#edit_content').css('display','none');
-        $('#emp_search_content').css('display','none');
+        // $('#emp_search_content').css('display','none');
         $('.floor_group').css('display','none');
         $('.bay_group').css('display','none');
         $('#cancel_btn').css('display','inline');
@@ -62,7 +62,7 @@ export function detailDom(detail_obj = {}) {
         $('#detail_content').css('display','block');
         $('#add_content').css('display','none');
         $('#edit_content').css('display','none');
-        $("#emp_search_content").css('display','none');
+        // $("#emp_search_content").css('display','none');
         $('.floor_group').css('display','none');
         $('.bay_group').css('display','none');
 
@@ -86,22 +86,13 @@ export function detailDom(detail_obj = {}) {
 }
 
 export function traverseDom(seat_ar = []) {
-    for(let i = 1; i <= 1; i++) {
-        for(let j = 1; j <= 2; j++) {
-            for(let k = 1; k <= 5; k++) {
-                let id_str = $('#F'+i+'-B'+j+'-S'+k).attr('id');
-                for(let x in seat_ar) {
-                    if(seat_ar[x].seat_id == id_str) {
-                        if(seat_ar[x].emp_id == "null") {
-                            $('#F'+i+'-B'+j+'-S'+k).css("background","green");
-                        } else {
-                            $('#F'+i+'-B'+j+'-S'+k).css("background","red");  
-                        }
-                    }
-                }
-            }
+    for(let i in seat_ar) {
+        if(seat_ar[i].emp_id == "null") {
+            $('#'+seat_ar[i].seat_id).css("background","green");
+        } else {
+            $('#'+seat_ar[i].seat_id).css("background","red");  
         }
-    }
+    }  
 }
 
 export function addDom(seat_id) {
@@ -146,21 +137,21 @@ export function assignId(idArray = []) {
     }
 }
 
-export function searchDom(emp_data = {}, seat_data) {
-    $('.pop_div').css('display','block');
-    $('#detail_content').css('display','none');
-    $('#add_content').css('display','none');
-    $('#edit_content').css('display','none');
-    $("#emp_search_content").css('display','block');
-    $('.floor_group').css('display','none');
-    $('.bay_group').css('display','none');
+// export function searchDom(emp_data = {}, seat_data) {
+//     $('.pop_div').css('display','block');
+//     $('#detail_content').css('display','none');
+//     $('#add_content').css('display','none');
+//     $('#edit_content').css('display','none');
+//     $("#emp_search_content").css('display','block');
+//     $('.floor_group').css('display','none');
+//     $('.bay_group').css('display','none');
 
-    $('#name_search').html(emp_data.emp_name);
-    $('#id_search').html(emp_data.emp_id);
-    $('#seat_search').html(seat_data);
+//     $('#name_search').html(emp_data.emp_name);
+//     $('#id_search').html(emp_data.emp_id);
+//     $('#seat_search').html(seat_data);
 
-    $('#search_1').css('display','block');
-    $('#search_2').css('display','block');
-    $('#search_3').css('display','block');
-    $('#fetch_btn').css('display','block');
-}
+//     $('#search_1').css('display','block');
+//     $('#search_2').css('display','block');
+//     $('#search_3').css('display','block');
+//     $('#fetch_btn').css('display','block');
+// }

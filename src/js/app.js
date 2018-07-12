@@ -5,7 +5,7 @@ import {Floor} from './models/Floor';
 import {Bay} from './models/Bay';
 import {save_data} from './utils/saveData';
 import {save_plan, retrieve_plan} from './utils/Storage';
-import {detailDom, traverseDom, addDom, hideDoms, createEditDom, searchDom, assignId} from './utils/Dom';
+import {detailDom, traverseDom, addDom, hideDoms, createEditDom, assignId} from './utils/Dom';
 import {floorIdArray, bayIdArray, seatIdArray} from './utils/domIdGroup';
 
 
@@ -24,15 +24,10 @@ render_plan(true)
 
 // ---------- On-Click event Handlers ----------
 
-let docBody = document.getElementsByTagName('BODY')[0];
-
 $('.floorImgGroup').maphilight();
 $('.bayArea').attr('data-maphilight','{"strokeColor":"000000", "strokeWidth":2, "fillColor":"ff0000", "fillOpacity":0.4}');
 
-
-$('#docBody').mouseover(function(event) {
-  
-}).click(function(event) {
+$('#docBody').click(function(event) {
   
   let id_ar = [];
   let target_div = event.target.title || event.target.id;
@@ -227,8 +222,7 @@ $('#emp_search_btn').click(function() {
   let emp_query = $('#emp_search_input').val();
   let query_flag = 0;
   let index;
-  let emp_data;
-  let seat_data;
+  let query_ar = [];
 
   if(emp_query == "") {
     window.alert("Query field empty");
@@ -241,10 +235,13 @@ $('#emp_search_btn').click(function() {
       }
     }
     if(query_flag == 1) {
-      
-      emp_data = emp_ar[index].getEmpDetail(emp_ar[index]);
-      seat_data = emp_ar[index].getSeat(emp_ar[index], seat_ar);
-      searchDom(emp_data, seat_data);
+
+      let seat_data = emp_ar[index].getSeat(emp_ar[index], seat_ar);
+      query_ar.push(seat_data);
+      query_ar.push($('#'+seat_data).parent().parent().attr('id'))
+      query_ar.push($('#'+seat_data).parent().parent().parent().attr('id'))
+      console.log(query_ar);
+      fetchDetail(query_ar);
       query_flag = 0;
       $('#emp_search_input').val("");
       
@@ -256,20 +253,20 @@ $('#emp_search_btn').click(function() {
 
 })
 
-$('#fetch_btn').click(function() {
-  let fetch_ar = []
-  let fetch_seat = $('#seat_search').html();
-  if(fetch_seat == "null") {
-    window.alert("No seat assigned to the Employee");
-  } else {
-    fetch_ar.push(fetch_seat);
-    fetch_ar.push($('#'+fetch_seat).parent().attr('id'));
-    fetch_ar.push($('#'+fetch_seat).parent().parent().attr('id'));
+// $('#fetch_btn').click(function() {
+//   let fetch_ar = []
+//   let fetch_seat = $('#seat_search').html();
+//   if(fetch_seat == "null") {
+//     window.alert("No seat assigned to the Employee");
+//   } else {
+//     fetch_ar.push(fetch_seat);
+//     fetch_ar.push($('#'+fetch_seat).parent().attr('id'));
+//     fetch_ar.push($('#'+fetch_seat).parent().parent().attr('id'));
 
-    fetchDetail(fetch_ar);
-    fetch_ar = [];
-  }
-})
+//     fetchDetail(fetch_ar);
+//     fetch_ar = [];
+//   }
+// })
 
 // ---------- Functions ----------
 
