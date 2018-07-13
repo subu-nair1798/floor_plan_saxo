@@ -25,6 +25,7 @@ html, body {
     height: 60px;
     top:0;
     left:0;
+    visibility: hidden;
 }
 
 .floor_group {

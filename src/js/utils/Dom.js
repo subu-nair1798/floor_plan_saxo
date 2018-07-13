@@ -109,6 +109,7 @@ export function hideDoms() {
     $('.pop_content').css('display','none');
     $('.floor_group').css('display','none');
     $('.bay_group').css('display','none');
+    $('#pin_img').css('visibility','hidden');
 }
 
 export function createEditDom(seat_id) {

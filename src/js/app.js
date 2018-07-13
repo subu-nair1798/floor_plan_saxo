@@ -7,6 +7,7 @@ import {save_data} from './utils/saveData';
 import {save_plan, retrieve_plan} from './utils/Storage';
 import {detailDom, traverseDom, addDom, hideDoms, createEditDom, assignId} from './utils/Dom';
 import {floorIdArray, bayIdArray, seatIdArray} from './utils/domIdGroup';
+import {seatCoords} from './utils/seatCoords';
 
 
 // assignId(floorIdArray);
@@ -18,6 +19,16 @@ let floor_ar = [];
 let bay_ar = [];
 let seat_ar = [];
 let edit_list = $('#edit_list');
+
+// ---------- Search Event Variables ----------
+let onload_flag = 0;
+let fetchSeat_flag = 0;
+let img_width;
+let img_height;
+let top_offset;
+let left_offset;
+let seatTop;
+let seatLeft;
 
 console.log("Inside Script : app.js");
 render_plan(true)
@@ -159,6 +170,7 @@ $('#floor1_toggle').click(function() {
   if($('#floor_1').css('display','none')) {
     $('#floor_1').css('display','block');
     $('#floor_2').css('display','none');
+    hideDoms();
   }
   
 })  
@@ -167,6 +179,7 @@ $('#floor2_toggle').click(function() {
   if($('#floor_2').css('display','none')) {
     $('#floor_2').css('display','block');
     $('#floor_1').css('display','none');
+    hideDoms();
   }
 })
 
@@ -194,31 +207,43 @@ $('#seat_search_btn').click(function() {
   }
 })
 
+let search_seat_query;
 function fetchSeat(seat_query) {
-  let query_ar = [];  
-  let mapId;
-  for(let i = 0; i < document.getElementsByClassName('bayArea').length; i++) {
-    if(document.getElementsByClassName('bayArea')[i].getAttribute('title') == $('#'+seat_query).parent().parent().attr('id')) {
-      mapId = document.getElementsByClassName('bayArea')[i].getAttribute('id');
-      break;
-    }
-  }
+  hideDoms();
   if($('#'+seat_query).parent().parent().parent().attr('id') == 'F1') {
     $('#floor1_toggle').click();
   } else if ($('#'+seat_query).parent().parent().parent().attr('id') == 'F2') {
     $('#floor2_toggle').click();
   }
-  change_higlight(mapId);
-
-  setTimeout(function() {
-    query_ar.push(seat_query);
-    query_ar.push($('#'+seat_query).parent().parent().attr('id'))
-    query_ar.push($('#'+seat_query).parent().parent().parent().attr('id'))
-    fetchDetail(query_ar);
-    query_ar = [];
-    change_higlight(mapId);
-  }, 2000)
+  for(let i in seatCoords) {
+    if(seatCoords[i].seat_id == seat_query) {
+      seatTop =  seatCoords[i].top;
+      seatLeft = seatCoords[i].left;
+      search_seat_query = seatCoords[i].seat_id;
+      fetchSeat_flag = 1;
+      markSeat(top_offset, left_offset, img_width, img_height);
+      break;
+    }
+  }
 }
+
+function markSeat(top, left, width, height) {
+  let pin_left = (seatLeft/1620)*width;
+  let pin_top = (seatTop/1125)*height;
+  $('#pin_img').css('visibility','visible');
+  $('#pin_img').offset({top: -56+pin_top+top, left: -26+pin_left+left});
+}
+
+$('#pin_img').click(function() {
+  let query_ar = [];
+  query_ar.push(search_seat_query);
+  query_ar.push($('#'+search_seat_query).parent().parent().attr('id'));
+  query_ar.push($('#'+search_seat_query).parent().parent().parent().attr('id'));
+  fetchDetail(query_ar);
+  query_ar = [];
+  $('#pin_img').css('visibility','hidden');
+  fetchSeat_flag = 0;
+})
 
 $('#emp_search_btn').click(function() {
   
@@ -255,11 +280,11 @@ $('#emp_search_btn').click(function() {
 
 // ---------- Functions ----------
 
-function change_higlight(mapId) {
-  let data = $('#'+mapId).mouseout().data('maphilight') || {};
-  data.alwaysOn = !data.alwaysOn;
-  $('#'+mapId).data('maphilight', data).trigger('alwaysOn.maphilight');
-}
+// function change_higlight(mapId) {
+//   let data = $('#'+mapId).mouseout().data('maphilight') || {};
+//   data.alwaysOn = !data.alwaysOn;
+//   $('#'+mapId).data('maphilight', data).trigger('alwaysOn.maphilight');
+// }
 
 
 function fetchDetail(id_ar = []) {
@@ -358,35 +383,26 @@ function render_plan(first_page_load = false) {
   console.log(seat_ar);
 }
 
-let onload_flag = 0;
-
 $(window).resize(function () {
   $('.floorImgGroup').maphilight();
-  if(onload_flag == 1) {
-    let img_width = $('#F1-plan').width();
-    let img_height = $('#F1-plan').height();
-    let top_offset = parseInt($('.floorAreaGroup').css('marginTop'))+81;
-    let left_offset = parseInt($('.container').css('marginLeft'))+30;
-    markSeat(top_offset, left_offset, img_width, img_height);
-  }
+    if(onload_flag == 1) {
+      img_width = $('#F1-plan').width();
+      img_height = $('#F1-plan').height();
+      top_offset = parseInt($('.floorAreaGroup').css('marginTop'))+81;
+      left_offset = parseInt($('.container').css('marginLeft'))+30;
+    }
+    if(fetchSeat_flag == 1) {
+      markSeat(top_offset, left_offset, img_width, img_height);
+    }
 })
 
 $('#F1-plan').on('load', function() {
-  let img_width = $(this).width();
-  let img_height = $(this).height();
-  let top_offset = parseInt($('.floorAreaGroup').css('marginTop'))+81;
-  let left_offset = parseInt($('.container').css('marginLeft'))+30;
-  markSeat(top_offset, left_offset, img_width, img_height);
-  onload_flag = 1;
+    img_width = $(this).width();
+    img_height = $(this).height();
+    top_offset = parseInt($('.floorAreaGroup').css('marginTop'))+81;
+    left_offset = parseInt($('.container').css('marginLeft'))+30;
+    onload_flag = 1;
 })
-
-function markSeat(top, left, width, height) {
-  let pin_left = (((123/1620)*100)*width)/100;
-  let pin_top = (((916/1125)*100)*height)/100;
-  $('#pin_img').offset({top: -50+pin_top+top, left: -26+pin_left+left});
-}
-
-
 
 // ---------- Function Call to Handle Window ReSize ----------
 
