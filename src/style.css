@@ -13,17 +13,18 @@ html, body {
 .floorImgGroup {
     width: 100%;
 }
+
 .floorAreaGroup {
     position: relative;
     margin-top: 100px;
 }
 
-#search_pin {
+#pin_img {
     position: absolute;
-    width: 100px;
-    height: 100px;
-    top: 549px;
-    left: 654px;
+    width: 60px;
+    height: 60px;
+    top:0;
+    left:0;
 }
 
 .floor_group {

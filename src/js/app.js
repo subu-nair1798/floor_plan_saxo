@@ -358,6 +358,36 @@ function render_plan(first_page_load = false) {
   console.log(seat_ar);
 }
 
+let onload_flag = 0;
+
+$(window).resize(function () {
+  $('.floorImgGroup').maphilight();
+  if(onload_flag == 1) {
+    let img_width = $('#F1-plan').width();
+    let img_height = $('#F1-plan').height();
+    let top_offset = parseInt($('.floorAreaGroup').css('marginTop'))+81;
+    let left_offset = parseInt($('.container').css('marginLeft'))+30;
+    markSeat(top_offset, left_offset, img_width, img_height);
+  }
+})
+
+$('#F1-plan').on('load', function() {
+  let img_width = $(this).width();
+  let img_height = $(this).height();
+  let top_offset = parseInt($('.floorAreaGroup').css('marginTop'))+81;
+  let left_offset = parseInt($('.container').css('marginLeft'))+30;
+  markSeat(top_offset, left_offset, img_width, img_height);
+  onload_flag = 1;
+})
+
+function markSeat(top, left, width, height) {
+  let pin_left = (((123/1620)*100)*width)/100;
+  let pin_top = (((916/1125)*100)*height)/100;
+  $('#pin_img').offset({top: -50+pin_top+top, left: -26+pin_left+left});
+}
+
+
+
 // ---------- Function Call to Handle Window ReSize ----------
 
-imageMapResize();
+$('img[usemap]').rwdImageMaps();
