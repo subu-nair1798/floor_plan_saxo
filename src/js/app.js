@@ -227,12 +227,7 @@ function fetchSeat(seat_query) {
   }
 }
 
-function markSeat(top, left, width, height) {
-  let pin_left = (seatLeft/1620)*width;
-  let pin_top = (seatTop/1125)*height;
-  $('#pin_img').css('visibility','visible');
-  $('#pin_img').offset({top: -56+pin_top+top, left: -26+pin_left+left});
-}
+
 
 $('#pin_img').click(function() {
   let query_ar = [];
@@ -388,19 +383,39 @@ $(window).resize(function () {
     if(onload_flag == 1) {
       img_width = $('#F1-plan').width();
       img_height = $('#F1-plan').height();
-      top_offset = parseInt($('.floorAreaGroup').css('marginTop'))+81;
-      left_offset = parseInt($('.container').css('marginLeft'))+30;
+      let left_margin;
+      if(parseFloat($('.container').css('marginLeft')) == 0) {
+        left_margin = 15;
+      } else {
+        left_margin = 30;
+      }
+      top_offset = parseFloat($('.floorAreaGroup').css('marginTop')) + (parseFloat($('.floorArea').height()) - parseFloat($('.floorImgGroup').height()));
+      left_offset = parseFloat($('.container').css('marginLeft')) + left_margin;
     }
     if(fetchSeat_flag == 1) {
       markSeat(top_offset, left_offset, img_width, img_height);
     }
 })
 
+function markSeat(top, left, width, height) {
+  let pin_left = (seatLeft/1620)*width;
+  let pin_top = (seatTop/1125)*height;
+  $('#pin_img').css('visibility','visible');
+  $('#pin_img').offset({top: -parseFloat((2048/2073)*60) + pin_top + top, left: -parseFloat((1079/2481)*60) + pin_left + left});
+}
+
 $('#F1-plan').on('load', function() {
+    console.log("Plan Loaded.");
     img_width = $(this).width();
     img_height = $(this).height();
-    top_offset = parseInt($('.floorAreaGroup').css('marginTop'))+81;
-    left_offset = parseInt($('.container').css('marginLeft'))+30;
+    let left_margin;
+    if(parseFloat($('.container').css('marginLeft')) == 0) {
+      left_margin = 15;
+    } else {
+      left_margin = 30;
+    }
+    top_offset = parseFloat($('.floorAreaGroup').css('marginTop')) + (parseFloat($('.floorArea').height()) - parseFloat($('.floorImgGroup').height()));
+    left_offset = parseFloat($('.container').css('marginLeft')) + left_margin;
     onload_flag = 1;
 })
 
