@@ -23,6 +23,9 @@ let edit_list = $('#edit_list');
 // ---------- Search Event Variables ----------
 let onload_flag = 0;
 let fetchSeat_flag = 0;
+let search_seat_query;
+
+// ---------- Pin Offset vars ----------
 let img_width;
 let img_height;
 let top_offset;
@@ -207,7 +210,6 @@ $('#seat_search_btn').click(function() {
   }
 })
 
-let search_seat_query;
 function fetchSeat(seat_query) {
   hideDoms();
   if($('#'+seat_query).parent().parent().parent().attr('id') == 'F1') {
@@ -403,11 +405,12 @@ function markSeat(top, left, width, height) {
   $('#pin_img').css('visibility','visible');
   $('#pin_img').offset({top: -parseFloat((2048/2073)*60) + pin_top + top, left: -parseFloat((1079/2481)*60) + pin_left + left});
 }
+// ---------- Function to calculate Image CSS before Bootstrap ----------
 
-$('#F1-plan').on('load', function() {
+setTimeout(function() {
     console.log("Plan Loaded.");
-    img_width = $(this).width();
-    img_height = $(this).height();
+    img_width = $('#F1-plan').width();
+    img_height = $('#F1-plan').height();
     let left_margin;
     if(parseFloat($('.container').css('marginLeft')) == 0) {
       left_margin = 15;
@@ -417,7 +420,7 @@ $('#F1-plan').on('load', function() {
     top_offset = parseFloat($('.floorAreaGroup').css('marginTop')) + (parseFloat($('.floorArea').height()) - parseFloat($('.floorImgGroup').height()));
     left_offset = parseFloat($('.container').css('marginLeft')) + left_margin;
     onload_flag = 1;
-})
+}, 0)
 
 // ---------- Function Call to Handle Window ReSize ----------
 
