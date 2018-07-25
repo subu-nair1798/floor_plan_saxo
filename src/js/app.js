@@ -300,7 +300,7 @@ $('#emp_search_btn').click(function() {
 
 })
 
-// ---------- Functions ----------
+
 
 // function change_higlight(mapId) {
 //   let data = $('#'+mapId).mouseout().data('maphilight') || {};
@@ -308,6 +308,7 @@ $('#emp_search_btn').click(function() {
 //   $('#'+mapId).data('maphilight', data).trigger('alwaysOn.maphilight');
 // }
 
+// ---------- Function to fetch Detail of the target element and Create Dom Element ----------
 
 function fetchDetail(id_ar = []) {
   let detail_obj;
@@ -404,6 +405,8 @@ function render_plan(first_page_load = false) {
   console.log(seat_ar);
 }
 
+// ---------- Function Call to Handle Window ReSize ----------
+
 $(window).resize(function () {
   $('.floorImgGroup').maphilight();
     if(onload_flag == 1) {
@@ -446,6 +449,6 @@ setTimeout(function() {
     onload_flag = 1;
 }, 0)
 
-// ---------- Function Call to Handle Window ReSize ----------
+
 
 $('img[usemap]').rwdImageMaps();

@@ -123,11 +123,11 @@ export function createEditDom(seat_id) {
     return edit_list_item;
 }
 
-export function assignId(idArray = []) {
-    for(let i = 0; i < document.getElementsByClassName(idArray[0]).length; i++) {
-        document.getElementsByClassName(idArray[0])[i].setAttribute("id", idArray[parseInt(i+1)]);
-    }
-}
+// export function assignId(idArray = []) {
+//     for(let i = 0; i < document.getElementsByClassName(idArray[0]).length; i++) {
+//         document.getElementsByClassName(idArray[0])[i].setAttribute("id", idArray[parseInt(i+1)]);
+//     }
+// }
 
 function createSeatDom(seat_group = [], bay_id, seat_ar = []) {
 
