@@ -5,21 +5,22 @@ export class Seat {
         this.assign_date = assign_date;
     }
 
-    getSeatDetail(seat_obj = {}, emp_data = {}) {
+    getSeatDetail(emp_data = {}, bay_id, floor_id) {
 
         let detail_obj = {
-            floor_id: $('#'+seat_obj.seat_id).parent().parent().parent().attr('id'),
-            bay_id: $('#'+seat_obj.seat_id).parent().parent().attr('id'),
-            seat_id: seat_obj.seat_id,
-            emp_id: seat_obj.emp_id,
+            floor_id: floor_id,
+            bay_id: bay_id,
+            seat_id: this.seat_id,
+            emp_id: this.emp_id,
             emp_name: emp_data.emp_name,
-            start_date: seat_obj.assign_date
+            start_date: this.assign_date
         }
 
         return detail_obj;
     }
 
-    assignSeat(seat_obj = {}, input_id, emp_ar = []) {
+    assignSeat(input_id, emp_ar = []) {
+        console.log(input_id);
         let temp_id = "null";
         for(let i in emp_ar) {
             if(emp_ar[i].emp_id == input_id) {
@@ -31,8 +32,8 @@ export class Seat {
             window.alert("Incorrect Employee ID");
             return false;
         } else {
-            seat_obj.emp_id = temp_id;
-            seat_obj.assign_date = new Date();
+            this.emp_id = temp_id;
+            this.assign_date = new Date();
             return true;
         }
 

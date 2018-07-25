@@ -27,10 +27,10 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="javascript:void(0)" id="floor1_toggle">Floor 1</a>
+                        <a class="nav-link" href="javascript:void(0)" id="floor5_toggle">Floor 5</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="javascript:void(0)" id="floor2_toggle">Floor 2</a>
+                        <a class="nav-link" href="javascript:void(0)" id="floor6_toggle">Floor 6</a>
                     </li>
                 </ul>
 
@@ -52,23 +52,34 @@
     </nav>
     <div class="container">
             <div class="floorAreaGroup">
-                <div id="floor_1" class="floorArea">
-                    <h1>Floor 1<button id="F1_info" class="floor_info btn btn-lg btn-info"><i class="fas fa-info-circle"></i></button></h1>
+                <div id="floor_5" class="floorArea">
+                    <h1>Floor 5<button id="F5_info" class="floor_info btn btn-lg btn-info"><i class="fas fa-info-circle"></i></button></h1>
                     <hr>
-                    <img src="./lib/img/Picture2.png" id="F1-plan" title="F1" usemap="#floor1_Map" class="floorImgGroup"/>
-                    <map name="floor1_Map" >
-                        <area shape="poly" data-toggle="tooltip" title="F1-B1" coords="215, 157, 216, 258, 318, 258, 318, 156" id="F1-B1-map" class="bayArea">
-                        <area shape="poly" data-toggle="tooltip" title="F1-B2" coords="319, 157, 480, 156, 480, 262, 318, 261" id="F1-B2-map" class="bayArea">
+                    <img src="./lib/img/picture5.jpg" id="F5" title="Floor 5" usemap="#floor5_Map" class="floorImgGroup"/>
+                    <map name="floor5_Map" >
+                        <area shape="poly" data-toggle="tooltip" title="5.001 - 5.009" coords="365, 247, 536, 247, 536, 435, 365, 435" id="F5-B01" class="mapArea">
+                        <area shape="poly" data-toggle="tooltip" title="5.010 - 5.023" coords="536, 433, 809, 433, 809, 254, 536, 254" id="F5-B02" class="mapArea">
+                        <area shape="poly" data-toggle="tooltip" title="5.024 - 5.049" coords="809, 254, 809, 433, 1301, 433, 1301, 254" id="F5-B03" class="mapArea">
+                        <area shape="poly" data-toggle="tooltip" title="5.050 - 5.089" coords="1301, 254, 1480, 254, 1480, 166, 2064, 166, 2064, 320, 1480, 320, 1480, 402, 1301, 402" id="F5-B04" class="mapArea">
+                        <area shape="poly" data-toggle="tooltip" title="5.091 - 5.098" coords="367, 435, 465, 436, 465, 640, 367, 640" id="F5-B05" class="mapArea">
+                        <area shape="poly" data-toggle="tooltip" title="5.103 - 5.111" coords="843, 489, 843, 642, 700, 642, 699, 489" id="F5-B06" class="mapArea">
+                        <area shape="poly" data-toggle="tooltip" title="5.112 - 5.138" coords="843, 433, 1301, 433, 1301, 640, 843, 640" id="F5-B07" class="mapArea">
+                        <area shape="poly" data-toggle="tooltip" title="5.139 - 5.144" coords="1301, 442, 1402, 442, 1402, 628, 1301, 628" id="F5-B08" class="mapArea">
+                        <area shape="poly" data-toggle="tooltip" title="5.146 - 5.192" coords="1560, 640, 2085, 640, 2085, 354, 1890, 354, 1890, 435, 1750, 435, 1750, 354, 1560, 354" id="F5-B09" class="mapArea">
+                        <area shape="poly" data-toggle="tooltip" title="5.207 - 5.150" coords="950, 690, 1875, 690, 1875, 885, 1435, 885, 1435, 790, 950, 790" id="F5-B10" class="mapArea">
+                        <area shape="poly" data-toggle="tooltip" title="5.255 - 5.288" coords="1380, 935, 1380, 1130, 1875, 1130, 1875, 935" id="F5-B11" class="mapArea">
+                        <area shape="poly" data-toggle="tooltip" title="5.291 - 5.347" coords="2130, 630, 2525, 630, 2525, 1195, 2345, 1195, 2345, 1195, 2345, 1140, 2130, 1140" id="F5-B12" class="mapArea">
+                        <area shape="poly" data-toggle="tooltip" title="5.354 - 5.398" coords="732, 1400, 1450, 1400, 1450, 1190, 732, 1190" id="F5-B13" class="mapArea">
+                        <area shape="poly" data-toggle="tooltip" title="5.404 - 5.444" coords="1850, 1192, 2162, 1192, 2162, 1155, 2330, 1155, 2330, 1235, 2523, 1235, 2523, 1401, 1850, 1401" id="F5-B14" class="mapArea">
+                        <area shape="poly" data-toggle="tooltip" title="5.446 - 5.457" coords="313, 1620, 520, 1620, 520, 1442, 313, 1442" id="F5-B15" class="mapArea">
                     </map>
                 </div>
-                <div id="floor_2" class="floorArea">
-                    <h1>Floor 2<button id="F2_info" class="floor_info btn btn-info btn-lg"><i class="fas fa-info-circle"></i></button></h1>
+                <div id="floor_6" class="floorArea">
+                    <h1>Floor 6<button id="F6_info" class="floor_info btn btn-info btn-lg"><i class="fas fa-info-circle"></i></button></h1>
                     <hr>
-                    <img src="./lib/img/Picture3.png" id="F2-plan" title="F2" class="floorImgGroup"/>
-                    
-                    <!-- <map name="floorMap" >
-                        <area shape="poly" data-toggle="tooltip" title="F1-B1" coords="215, 157, 216, 258, 318, 258, 318, 156" class="bayArea">
-                        <area shape="poly" data-toggle="tooltip" title="F1-B2" coords="319, 157, 480, 156, 480, 262, 318, 261" class="bayArea">
+                    <img src="./lib/img/picture6.jpg" id="F6" title="Floor 6" usemap="#floor6_Map" class="floorImgGroup"/>
+                    <!-- <map name="floor6_Map" >
+                         
                     </map> -->
                 </div>
                 <img id="pin_img" src="./lib/img/map-pin-red.svg">
@@ -76,42 +87,12 @@
             </div>
             
             
-            <div id="F1" class="floor_group">
-                <div id="F1-B1" class="bay_group">
-                    <h1>Bay : F1-B1 <span class="close">&times;</span></h1>
+            <div class="floor_group">
+                <div class="bay_group">
+                    <h1><span class="bay_range"></span><span class="close">&times;</span></h1>
                     <hr>
                     <br>
                     <div class="bay_content">
-                        <div id="F1-B1-S1" class="seat_group">S1</div>
-                        <div id="F1-B1-S2" class="seat_group">S2</div>
-                        <div id="F1-B1-S3" class="seat_group">S3</div>
-                        <div id="F1-B1-S4" class="seat_group">S4</div>
-                        <div id="F1-B1-S5" class="seat_group">S5</div>
-                        <div id="F1-B1-S6" class="seat_group">S6</div>
-                        <div id="F1-B1-S7" class="seat_group">S7</div>
-                        <div id="F1-B1-S8" class="seat_group">S8</div>
-                        <div id="F1-B1-S9" class="seat_group">S9</div>
-                    </div>
-                </div>
-                <div id="F1-B2" class="bay_group">
-                    <h1>Bay : F1-B2 <span class="close">&times;</span></h1>
-                    <hr>
-                    <br>
-                    <div class="bay_content">
-                        <div id="F1-B2-S1" class="seat_group">S1</div>
-                        <div id="F1-B2-S2" class="seat_group">S2</div>
-                        <div id="F1-B2-S3" class="seat_group">S3</div>
-                        <div id="F1-B2-S4" class="seat_group">S4</div>
-                        <div id="F1-B2-S5" class="seat_group">S5</div>
-                        <div id="F1-B2-S6" class="seat_group">S6</div>
-                        <div id="F1-B2-S7" class="seat_group">S7</div>
-                        <div id="F1-B2-S8" class="seat_group">S8</div>
-                        <div id="F1-B2-S9" class="seat_group">S9</div>
-                        <div id="F1-B2-S10" class="seat_group">S10</div>
-                        <div id="F1-B2-S11" class="seat_group">S11</div>
-                        <div id="F1-B2-S12" class="seat_group">S12</div>
-                        <div id="F1-B2-S13" class="seat_group">S13</div>
-                        <div id="F1-B2-S14" class="seat_group">S14</div>
                     </div>
                 </div>
             </div>
@@ -147,6 +128,7 @@
                     <button class="btn btn-danger" id="delete_btn">Unassign</button>
                     <button class="btn btn-dark" id="edit_btn">Re-Assign Desk</button>  
                     <button class="btn btn-danger" id="cancel_btn">Cancel</button>  
+                    
                 </div>
                 <div id="add_content" class="pop_content">
                     <h1>Add<span class="close">&times;</span></h1>

@@ -4,10 +4,10 @@ export class Floor {
         this.bay_ar = bay_ar;
     }
 
-    getFloorDetail(floor_obj = {}) {
+    getFloorDetail() {
         let detail_obj = {
-            floor_id: floor_obj.floor_id,
-            bay_ar: floor_obj.bay_ar
+            floor_id: this.floor_id,
+            bay_ar: this.bay_ar
         }
         return detail_obj;
     }

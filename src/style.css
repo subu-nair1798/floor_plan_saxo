@@ -6,7 +6,7 @@ html, body {
     padding: 0;
 }
 
-#floor_2 {
+#floor_6 {
     display: none;
 }
 
@@ -94,7 +94,7 @@ html, body {
     font-size: 28px;
     font-weight: bold;
 }
-#F1_info, #F2_info {
+#F5_info, #F6_info {
     float: right;
 }
 #close:hover,

@@ -1,12 +1,17 @@
 export let seatCoords = [
     {
-        seat_id: 'F1-B1-S1',
-        top: 173,
-        left: 225
+        seat_id: '5.001',
+        top: 363,
+        left: 380
     },
     {
-        seat_id: 'F1-B2-S5',
-        top: 195,
-        left: 364
+        seat_id: '5.088',
+        top: 248,
+        left: 2022
+    },
+    {
+        seat_id: '5.036',
+        top: 375,
+        left: 1029
     },
 ]

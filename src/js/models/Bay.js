@@ -4,12 +4,12 @@ export class Bay {
         this.seat_ar = seat_ar;
     }
 
-    getBayDetail (bay_obj = {}) {
+    getBayDetail (floor_id) {
 
         let detail_obj = {
-            bay_id: bay_obj.bay_id,
-            floor_id: $('#'+bay_obj.bay_id).parent().attr('id'),
-            seat_ar: bay_obj.seat_ar
+            bay_id: this.bay_id,
+            floor_id: floor_id,
+            seat_ar: this.seat_ar
         }
         return detail_obj;
     }

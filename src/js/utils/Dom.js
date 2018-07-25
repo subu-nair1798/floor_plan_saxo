@@ -1,5 +1,4 @@
-export function detailDom(detail_obj = {}) {
-    
+export function detailDom(detail_obj = {}, seat_ar = []) {
     if(Object.keys(detail_obj).length == 6) {
         $('.pop_div').css('display','block');
         $('#detail_content').css('display','block');
@@ -54,7 +53,8 @@ export function detailDom(detail_obj = {}) {
         $('.pop_div').css('display','none');
         $('.pop_content').css('display','none')
         $('.floor_group').css('display','block');
-        $('#'+detail_obj.bay_id).css('display','block')
+        $('.bay_group').css('display','block');
+        createSeatDom(detail_obj.seat_ar, detail_obj.bay_id, seat_ar);
 
     } else if(Object.keys(detail_obj).length == 2) {
         
@@ -85,15 +85,6 @@ export function detailDom(detail_obj = {}) {
     }
 }
 
-export function traverseDom(seat_ar = []) {
-    for(let i in seat_ar) {
-        if(seat_ar[i].emp_id == "null") {
-            $('#'+seat_ar[i].seat_id).css("background","green");
-        } else {
-            $('#'+seat_ar[i].seat_id).css("background","red");  
-        }
-    }  
-}
 
 export function addDom(seat_id) {
     $('.floor_group').css('display','none');
@@ -137,6 +128,39 @@ export function assignId(idArray = []) {
         document.getElementsByClassName(idArray[0])[i].setAttribute("id", idArray[parseInt(i+1)]);
     }
 }
+
+function createSeatDom(seat_group = [], bay_id, seat_ar = []) {
+
+    for(let i in seat_group) {
+        let seat_div;
+        for(let j in seat_ar) {
+            if(seat_group[i] == seat_ar[j].seat_id) {
+                if(seat_ar[j].emp_id == "null") {
+                    seat_div = $('<div class="seat_group" style="background:green" id="'+seat_group[i]+'">'+seat_group[i]+'</div>');
+                } else {
+                    seat_div = $('<div class="seat_group" style="background:red" id="'+seat_group[i]+'">'+seat_group[i]+'</div>');
+                }
+            }
+        }   
+        $('.bay_group').children('h1').children('.bay_range').html($('#'+bay_id).attr('title'));
+        $('.bay_group').children('.bay_content').append(seat_div);
+    }
+}
+
+
+// export function traverseDom(seat_group = [], seat_ar = []) {
+//     for(let i in seat_group) {
+//         for(let j in seat_ar) {
+//             if(seat_group[i] == seat_ar[j].seat_id) {
+//                 if(seat_ar[j].emp_id == "null") {
+//                     $('#'+seat_ar[j].seat_id).css("background","green");
+//                 } else {
+//                     $('#'+seat_ar[j].seat_id).css("background","red");  
+//                 }
+//             }
+//         } 
+//     }  
+// }
 
 // export function searchDom(emp_data = {}, seat_data) {
 //     $('.pop_div').css('display','block');

@@ -6,7 +6,7 @@ import {Bay} from './models/Bay';
 import {save_data} from './utils/saveData';
 import {save_plan, retrieve_plan} from './utils/Storage';
 import {detailDom, traverseDom, addDom, hideDoms, createEditDom, assignId} from './utils/Dom';
-import {floorIdArray, bayIdArray, seatIdArray} from './utils/domIdGroup';
+// import {floorIdArray, bayIdArray, seatIdArray} from './utils/domIdGroup';
 import {seatCoords} from './utils/seatCoords';
 
 
@@ -39,23 +39,32 @@ render_plan(true)
 // ---------- On-Click event Handlers ----------
 
 $('.floorImgGroup').maphilight();
-$('.bayArea').attr('data-maphilight','{"strokeColor":"000000", "strokeWidth":2, "fillColor":"ff0000", "fillOpacity":0.4}');
+$('.mapArea').attr('data-maphilight','{"strokeColor":"000000", "strokeWidth":2, "fillColor":"ff0000", "fillOpacity":0.4}');
 
 $('#docBody').click(function(event) {
   
   let id_ar = [];
-  let target_div = event.target.title || event.target.id;
-  // console.log(target_div);
+  let target_div = event.target.id;
   if(seat_ar.map(s => s.seat_id).indexOf(target_div) >= 0) {
 
+    let target_bay;
+    let target_floor;
     id_ar.push(target_div);
-    id_ar.push(event.target.parentElement.parentElement.id);
-    id_ar.push(event.target.parentElement.parentElement.parentElement.id);
+    for(let i = 0; i < bay_ar.length; i++) {
+      for(let j = 0; j < bay_ar[i].seat_ar.length; j++) {
+        if(bay_ar[i].seat_ar[j] == target_div) {
+          target_bay = bay_ar[i].bay_id;
+          target_floor = bay_ar[i].bay_id.substr(0,2);
+          break;
+        }
+      }
+    }
+    id_ar.push(target_bay);
+    id_ar.push(target_floor);
     
   } else if(bay_ar.map(b => b.bay_id).indexOf(target_div) >= 0) {
-
     id_ar.push(target_div);
-    id_ar.push($('#'+target_div).parent().attr('id'));
+    id_ar.push(target_div.substr(0,2));
   }
   fetchDetail(id_ar);
 })
@@ -75,7 +84,12 @@ $('.close').click(function() {
 $('#cancel_btn').click(function() {
   $('.pop_div').css('display','none');
   $('.floor_group').css('display','block');
-  $('#'+$('#bay_info').html()).css('display','block');
+  $('.bay_content').empty();
+  $('.bay_range').empty();
+  let id_ar = [];
+  id_ar.push($('#bay_info').html());
+  id_ar.push($('#floor_info').html())
+  fetchDetail(id_ar);
 })
 
 $('#add_btn').click(function() {
@@ -91,7 +105,7 @@ $('#submit_add').click(function() {
   if(($("#seat_input").val() == "") || ($("#id_input").val() == "")) {
     window.alert("Please fill all input fields");
   } else {
-    if(seat_ar[seat_ar.map(s => s.seat_id).indexOf($('#seat_input').val())].assignSeat(seat_ar[seat_ar.map(s => s.seat_id).indexOf($('#seat_input').val())], $('#id_input').val(), emp_ar)){
+    if(seat_ar[seat_ar.map(s => s.seat_id).indexOf($('#seat_input').val())].assignSeat($('#id_input').val(), emp_ar)){
       render_plan();
     }
   }
@@ -143,7 +157,7 @@ $('#submit_edit').click(function() {
       if($('#to_input').val() === $('#from_input').val()) {
         window.alert('Source and Destination seat are same!');
       } else if(seat_ar[seat_ar.map(s => s.seat_id).indexOf($('#to_input').val())].emp_id == "null") {
-        seat_ar[seat_ar.map(s => s.seat_id).indexOf($('#to_input').val())].assignSeat(seat_ar[seat_ar.map(s => s.seat_id).indexOf($('#to_input').val())], seat_ar[seat_ar.map(s => s.seat_id).indexOf($('#from_input').val())].emp_id, emp_ar);
+        seat_ar[seat_ar.map(s => s.seat_id).indexOf($('#to_input').val())].assignSeat(seat_ar[seat_ar.map(s => s.seat_id).indexOf($('#from_input').val())].emp_id, emp_ar);
         seat_ar[seat_ar.map(s => s.seat_id).indexOf($('#from_input').val())].unassignSeat(seat_ar.map(s => s.seat_id).indexOf($('#from_input').val()), seat_ar);
         render_plan();
       } else {
@@ -169,19 +183,19 @@ $('#cancel_edit').click(function() {
 
 // ---------- NavBar functions ----------
 
-$('#floor1_toggle').click(function() {
-  if($('#floor_1').css('display','none')) {
-    $('#floor_1').css('display','block');
-    $('#floor_2').css('display','none');
+$('#floor5_toggle').click(function() {
+  if($('#floor_5').css('display','none')) {
+    $('#floor_5').css('display','block');
+    $('#floor_6').css('display','none');
     hideDoms();
   }
   
 })  
 
-$('#floor2_toggle').click(function() {
-  if($('#floor_2').css('display','none')) {
-    $('#floor_2').css('display','block');
-    $('#floor_1').css('display','none');
+$('#floor6_toggle').click(function() {
+  if($('#floor_6').css('display','none')) {
+    $('#floor_6').css('display','block');
+    $('#floor_5').css('display','none');
     hideDoms();
   }
 })
@@ -212,10 +226,10 @@ $('#seat_search_btn').click(function() {
 
 function fetchSeat(seat_query) {
   hideDoms();
-  if($('#'+seat_query).parent().parent().parent().attr('id') == 'F1') {
-    $('#floor1_toggle').click();
-  } else if ($('#'+seat_query).parent().parent().parent().attr('id') == 'F2') {
-    $('#floor2_toggle').click();
+  if(seat_query.substr(0,1) == '5') {
+    $('#floor5_toggle').click();
+  } else if (seat_query.substr(0,1) == '6') {
+    $('#floor6_toggle').click();
   }
   for(let i in seatCoords) {
     if(seatCoords[i].seat_id == seat_query) {
@@ -233,9 +247,20 @@ function fetchSeat(seat_query) {
 
 $('#pin_img').click(function() {
   let query_ar = [];
+  let query_bay;
+  let query_floor;
+  for(let i = 0; i < bay_ar.length; i++) {
+    for(let j = 0; j < bay_ar[i].seat_ar.length; j++) {
+      if(bay_ar[i].seat_ar[j] == search_seat_query) {
+        query_bay = bay_ar[i].bay_id;
+        query_floor = bay_ar[i].bay_id.substr(0,2);
+        break;
+      }
+    }
+  }
   query_ar.push(search_seat_query);
-  query_ar.push($('#'+search_seat_query).parent().parent().attr('id'));
-  query_ar.push($('#'+search_seat_query).parent().parent().parent().attr('id'));
+  query_ar.push(query_bay);
+  query_ar.push(query_floor);
   fetchDetail(query_ar);
   query_ar = [];
   $('#pin_img').css('visibility','hidden');
@@ -259,9 +284,9 @@ $('#emp_search_btn').click(function() {
       }
     }
     if(query_flag == 1) {
-      let seat_data = emp_ar[index].getSeat(emp_ar[index], seat_ar);
+      let seat_data = emp_ar[index].getSeat(seat_ar);
       if(seat_data == "null") {
-        window.alert('No Seat Assign to Employee: '+emp_query);
+        window.alert('No Seat Assigned to Employee: '+emp_query);
       } else {
         fetchSeat(seat_data);
       }
@@ -285,7 +310,6 @@ $('#emp_search_btn').click(function() {
 
 
 function fetchDetail(id_ar = []) {
-
   let detail_obj;
   if(id_ar.length == 3) {
     let index;
@@ -298,14 +322,14 @@ function fetchDetail(id_ar = []) {
     let emp_index = emp_ar.map(e => e.emp_id).indexOf(seat_ar[index].emp_id);
     let emp_data;
     if(emp_index >= 0) {
-      emp_data = emp_ar[emp_index].getEmpDetail(emp_ar[emp_index]);
+      emp_data = emp_ar[emp_index].getEmpDetail();
     } else {
       emp_data = {
         emp_id: "null",
         emp_name: "null"
       }
     }
-    detail_obj = seat_ar[index].getSeatDetail(seat_ar[index], emp_data);
+    detail_obj = seat_ar[index].getSeatDetail(emp_data, id_ar[1], id_ar[2]);
 
   } else if(id_ar.length == 2) {
     let index;
@@ -315,7 +339,7 @@ function fetchDetail(id_ar = []) {
         break;
       }
     }
-    detail_obj = bay_ar[index].getBayDetail(bay_ar[index]);
+    detail_obj = bay_ar[index].getBayDetail(id_ar[1]);
 
   } else if(id_ar.length == 1) {
     let index;
@@ -325,9 +349,9 @@ function fetchDetail(id_ar = []) {
         break;
       }
     }
-    detail_obj = floor_ar[index].getFloorDetail(floor_ar[index]);
+    detail_obj = floor_ar[index].getFloorDetail();
   }
-  detailDom(detail_obj);
+  detailDom(detail_obj, seat_ar);
 }
 
 // ---------- Render function to save the changes to DB and re-render DOM elements ----------
@@ -369,8 +393,8 @@ function render_plan(first_page_load = false) {
       seat_ar[i] = new Seat(seat_plan[i].seat_id, seat_plan[i].emp_id, DateGenerator.getRandomDate())
     }
   }
-
-  traverseDom(seat_ar)
+  $('.bay_content').empty();
+  $('.bay_range').empty();
   hideDoms();
   $(":input").val("");
   edit_list.empty();
@@ -383,8 +407,8 @@ function render_plan(first_page_load = false) {
 $(window).resize(function () {
   $('.floorImgGroup').maphilight();
     if(onload_flag == 1) {
-      img_width = $('#F1-plan').width();
-      img_height = $('#F1-plan').height();
+      img_width = $('#F5').width();
+      img_height = $('#F5').height();
       let left_margin;
       if(parseFloat($('.container').css('marginLeft')) == 0) {
         left_margin = 15;
@@ -400,8 +424,8 @@ $(window).resize(function () {
 })
 
 function markSeat(top, left, width, height) {
-  let pin_left = (seatLeft/1620)*width;
-  let pin_top = (seatTop/1125)*height;
+  let pin_left = (seatLeft/2724)*width;
+  let pin_top = (seatTop/1884)*height;
   $('#pin_img').css('visibility','visible');
   $('#pin_img').offset({top: -parseFloat((2048/2073)*60) + pin_top + top, left: -parseFloat((1079/2481)*60) + pin_left + left});
 }
@@ -409,8 +433,8 @@ function markSeat(top, left, width, height) {
 
 setTimeout(function() {
     console.log("Plan Loaded.");
-    img_width = $('#F1-plan').width();
-    img_height = $('#F1-plan').height();
+    img_width = $('#F5').width();
+    img_height = $('#F5').height();
     let left_margin;
     if(parseFloat($('.container').css('marginLeft')) == 0) {
       left_margin = 15;
