@@ -105,7 +105,7 @@ $('#submit_add').click(function() {
   if(($("#seat_input").val() == "") || ($("#id_input").val() == "")) {
     window.alert("Please fill all input fields");
   } else {
-    if(seat_ar[seat_ar.map(s => s.seat_id).indexOf($('#seat_input').val())].assignSeat($('#id_input').val(), emp_ar)){
+    if(seat_ar[seat_ar.map(s => s.seat_id).indexOf($('#seat_input').val())].assignSeat($('#id_input').val(), emp_ar, seat_ar)){
       render_plan();
     }
   }

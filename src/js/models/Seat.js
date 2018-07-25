@@ -19,13 +19,18 @@ export class Seat {
         return detail_obj;
     }
 
-    assignSeat(input_id, emp_ar = []) {
-        console.log(input_id);
+    assignSeat(input_id, emp_ar = [], seat_ar = []) {
         let temp_id = "null";
         for(let i in emp_ar) {
             if(emp_ar[i].emp_id == input_id) {
                 temp_id = emp_ar[i].emp_id;
                 break;
+            }
+        }
+        for(let i in seat_ar) {
+            if(seat_ar[i].emp_id == temp_id) {
+                window.alert("Employee: " + temp_id + " already assigned to Seat: " + seat_ar[i].seat_id);
+                return false;
             }
         }
         if(temp_id == "null") {
