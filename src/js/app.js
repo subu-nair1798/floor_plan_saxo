@@ -5,14 +5,10 @@ import {Floor} from './models/Floor';
 import {Bay} from './models/Bay';
 import {save_data} from './utils/saveData';
 import {save_plan, retrieve_plan} from './utils/Storage';
-import {detailDom, traverseDom, addDom, hideDoms, createEditDom, assignId} from './utils/Dom';
+import {detailDom, addDom, hideDoms, createEditDom} from './utils/Dom';
 // import {floorIdArray, bayIdArray, seatIdArray} from './utils/domIdGroup';
 import {seatCoords} from './utils/seatCoords';
 
-
-// assignId(floorIdArray);
-// assignId(bayIdArray);
-// assignId(seatIdArray);
 
 let emp_ar = [];
 let floor_ar = [];
