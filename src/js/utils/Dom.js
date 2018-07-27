@@ -110,7 +110,7 @@ export function createEditDom(seat_id) {
 
     let from_text = $('<div class="col-2"><h4>From : </h4></div>');
     let from_div = $('<div class="col-3 text-center"></div>');
-    let from_input = $('<input type="text" class="form-control text-center" id="from_input"></input>');
+    let from_input = $('<input type="text" class="form-control text-center" id="from_input" disabled></input>');
     from_input.val(seat_id);
 
     let to_text = $('<div class="col-2"><h4> To : </h4></div>');
