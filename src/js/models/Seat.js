@@ -28,7 +28,7 @@ export class Seat {
             }
         }
         for(let i in seat_ar) {
-            if(seat_ar[i].emp_id == temp_id) {
+            if(seat_ar[i].emp_id == temp_id && temp_id != "null") {
                 window.alert("Employee: " + temp_id + " already assigned to Seat: " + seat_ar[i].seat_id);
                 return false;
             }
